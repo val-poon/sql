@@ -192,7 +192,18 @@ Before your final group by you should have the product of those two queries (x*y
 -- Step 3: Multiply to get total revenue
 
 
--- CROSS JOIN: cross join customers with vendor inventory, assume 5 units sold per customer, calculate total revenue
+-- SECTION 3: Answering x and y explicitly before final revenue calc
+
+-- Step 1: Count distinct vendor-product combinations
+SELECT COUNT(DISTINCT vi.vendor_id || '-' || vi.product_id) AS vendor_product_combos
+FROM vendor_inventory vi;
+
+-- Step 2: Count distinct customers
+SELECT COUNT(*) AS customer_count
+FROM customer;
+
+
+-- Step 3 CROSS JOIN: cross join customers with vendor inventory, assume 5 units sold per customer, calculate total revenue
 SELECT
   v.vendor_name,
   p.product_name,
